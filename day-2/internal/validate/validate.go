@@ -22,7 +22,7 @@ func IdentifyValidPasswords(inputs []string, validator Validator) (int, error) {
 	for _, input := range inputs {
 		password, policy, err := ParsePasswordPolicy(input)
 		if err != nil {
-			return 0, err
+			return valid, err
 		}
 
 		isValid := validator(policy, password)
@@ -60,24 +60,27 @@ func ApplyTobogganCorpPolicy(policy *PasswordPolicy, password Password) bool {
 
 func ParsePasswordPolicy(input string) (Password, *PasswordPolicy, error) {
 	components := strings.Split(input, " ")
+	var password Password
+	var policy *PasswordPolicy
 
 	if len(components) != 3 {
-		return "", nil, fmt.Errorf("%s is not a valid password policy", input)
+		return password, policy, fmt.Errorf("%s is not a valid password policy", input)
 	}
 
 	min, max, err := ParsePolicyMinMax(components[0])
 	if err != nil {
-		return "", nil, err
+		return password, policy, err
 	}
 
 	character, err := ParsePolicyCharacter(components[1])
 	if err != nil {
-		return "", nil, err
+		return password, policy, err
 	}
 
-	password := Password(components[2])
+	password = Password(components[2])
+	policy = &PasswordPolicy{Character: character, Min: min, Max: max}
 
-	return password, &PasswordPolicy{Character: character, Min: min, Max: max}, nil
+	return password, policy, nil
 }
 
 func ParsePolicyMinMax(input string) (int, int, error) {
