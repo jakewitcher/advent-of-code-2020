@@ -17,7 +17,7 @@ func main() {
 }
 
 func PartOne(entries []int) {
-	product, err := report.FindProductOfTwoEntriesWithSum(entries, 2020)
+	product, err := report.FindProductOfTwoEntriesWithTargetSum(entries, 2020)
 	if err != nil {
 		log.Println(err.Error())
 		return
@@ -27,7 +27,7 @@ func PartOne(entries []int) {
 }
 
 func PartTwo(entries []int) {
-	product, err := report.FindProductOfThreeEntriesWithSum(entries, 2020)
+	product, err := report.FindProductOfThreeEntriesWithTargetSum(entries, 2020)
 	if err != nil {
 		log.Println(err.Error())
 		return

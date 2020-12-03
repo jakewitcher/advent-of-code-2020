@@ -7,7 +7,7 @@ import (
 
 func TestFindProductOfTwoEntriesWithSum(t *testing.T) {
 	for _, test := range twoEntriesTestCases {
-		actual, err := report.FindProductOfTwoEntriesWithSum(test.expenses, test.target)
+		actual, err := report.FindProductOfTwoEntriesWithTargetSum(test.expenses, test.target)
 		if err != nil && test.success {
 			t.Fatal("test case should have produced a valid pair of entries")
 		}
@@ -20,7 +20,7 @@ func TestFindProductOfTwoEntriesWithSum(t *testing.T) {
 
 func TestFindProductOfThreeEntriesWithSum(t *testing.T) {
 	for _, test := range threeEntriesTestCases {
-		actual, err := report.FindProductOfThreeEntriesWithSum(test.expenses, test.target)
+		actual, err := report.FindProductOfThreeEntriesWithTargetSum(test.expenses, test.target)
 		if err != nil && test.success {
 			t.Fatal("test case should have produced a valid pair of entries")
 		}
