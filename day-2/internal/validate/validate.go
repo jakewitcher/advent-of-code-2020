@@ -13,6 +13,7 @@ type PasswordPolicy struct {
 }
 
 type Password string
+
 type Validator func(policy *PasswordPolicy, password Password) bool
 
 func IdentifyValidPasswords(inputs []string, validator Validator) (int, error) {
@@ -49,7 +50,7 @@ func ApplyTobogganCorpPolicy(policy *PasswordPolicy, password Password) bool {
 	var count int
 
 	for i, r := range password {
-		if (i + 1 == policy.Min || i + 1 == policy.Max) && r == policy.Character {
+		if (i+1 == policy.Min || i+1 == policy.Max) && r == policy.Character {
 			count++
 		}
 	}

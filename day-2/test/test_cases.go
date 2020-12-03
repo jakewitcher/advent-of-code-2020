@@ -52,74 +52,74 @@ var parsePasswordPolicyTestCases = []struct {
 }{
 	{
 		password: validate.Password("cvjcc"),
-		policy: &validate.PasswordPolicy{Character: 'c', Min: 1, Max: 3},
-		input: "1-3 c: cvjcc",
-		success: true,
+		policy:   &validate.PasswordPolicy{Character: 'c', Min: 1, Max: 3},
+		input:    "1-3 c: cvjcc",
+		success:  true,
 	},
 	{
 		password: validate.Password("nkfgnr"),
-		policy: &validate.PasswordPolicy{Character: 'r', Min: 10, Max: 13},
-		input: "10-13 r: nkfgnr",
-		success: true,
+		policy:   &validate.PasswordPolicy{Character: 'r', Min: 10, Max: 13},
+		input:    "10-13 r: nkfgnr",
+		success:  true,
 	},
 	{
 		password: validate.Password(""),
-		policy: nil,
-		input: "1-3 r: nkfgnr 45",
-		success: false,
+		policy:   nil,
+		input:    "1-3 r: nkfgnr 45",
+		success:  false,
 	},
 	{
 		password: validate.Password(""),
-		policy: nil,
-		input: "ab-cd r: nkfgnr",
-		success: false,
+		policy:   nil,
+		input:    "ab-cd r: nkfgnr",
+		success:  false,
 	},
 	{
 		password: validate.Password(""),
-		policy: nil,
-		input: "1-3-7 r: nkfgnr",
-		success: false,
+		policy:   nil,
+		input:    "1-3-7 r: nkfgnr",
+		success:  false,
 	},
 	{
 		password: validate.Password(""),
-		policy: nil,
-		input: "1-3 45: nkfgnr",
-		success: false,
+		policy:   nil,
+		input:    "1-3 45: nkfgnr",
+		success:  false,
 	},
 }
 
 var identifyValidSledRentalPasswordsTestCases = []struct {
 	expected int
-	input []string
+	input    []string
 }{
 	{
 		expected: 1,
-		input: []string{"1-3 a: abcdea"},
+		input:    []string{"1-3 a: abcdea"},
 	},
 	{
 		expected: 0,
-		input: []string{"3-5 a: abcdea"},
+		input:    []string{"3-5 a: abcdea"},
 	},
 	{
 		expected: 2,
-		input: []string{"1-3 a: abcde", "1-3 b: cdefg", "2-9 c: ccccccccc"},
+		input:    []string{"1-3 a: abcde", "1-3 b: cdefg", "2-9 c: ccccccccc"},
 	},
 }
 
 var identifyValidTobogganCorpPasswordsTestCases = []struct {
 	expected int
-	input []string
+	input    []string
 }{
 	{
 		expected: 1,
-		input: []string{"1-3 a: abcdea"},
+		input:    []string{"1-3 a: abcdea"},
 	},
 	{
 		expected: 0,
-		input: []string{"3-5 a: abcdea"},
+		input:    []string{"3-5 a: abcdea"},
 	},
 	{
 		expected: 1,
-		input: []string{"1-3 a: abcde", "1-3 b: cdefg", "2-9 c: ccccccccc"},
+		input:    []string{"1-3 a: abcde", "1-3 b: cdefg", "2-9 c: ccccccccc"},
 	},
 }
