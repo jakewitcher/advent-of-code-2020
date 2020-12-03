@@ -11,7 +11,7 @@ func FindProductOfTwoEntriesWithSum(entries []int, target int) (int, error) {
 		}
 	}
 
-	return 0, fmt.Errorf("no pair of entries found equaling %v", target)
+	return 0, fmt.Errorf("no pair of entries found equaling %d", target)
 }
 
 func FindProductOfThreeEntriesWithSum(entries []int, target int) (int, error) {
@@ -25,5 +25,5 @@ func FindProductOfThreeEntriesWithSum(entries []int, target int) (int, error) {
 		}
 	}
 
-	return 0, fmt.Errorf("no pair of entries found equaling %v", target)
+	return 0, fmt.Errorf("no pair of entries found equaling %d", target)
 }

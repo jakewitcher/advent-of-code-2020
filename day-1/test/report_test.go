@@ -13,7 +13,7 @@ func TestFindProductOfTwoEntriesWithSum(t *testing.T) {
 		}
 
 		if actual != test.expected {
-			t.Fatalf("expected: %v, actual: %v", test.expected, actual)
+			t.Fatalf("expected: %d, actual: %d", test.expected, actual)
 		}
 	}
 }
@@ -26,7 +26,7 @@ func TestFindProductOfThreeEntriesWithSum(t *testing.T) {
 		}
 
 		if actual != test.expected {
-			t.Fatalf("expected: %v, actual: %v", test.expected, actual)
+			t.Fatalf("expected: %d, actual: %d", test.expected, actual)
 		}
 	}
 }

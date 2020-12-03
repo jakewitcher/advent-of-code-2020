@@ -23,7 +23,7 @@ func PartOne(entries []int) {
 		return
 	}
 
-	log.Printf("product of entries with sum of 2020: %v", product)
+	log.Printf("product of entries with sum of 2020: %d", product)
 }
 
 func PartTwo(entries []int) {
@@ -33,5 +33,5 @@ func PartTwo(entries []int) {
 		return
 	}
 
-	log.Printf("product of entries with sum of 2020: %v", product)
+	log.Printf("product of entries with sum of 2020: %d", product)
 }
