@@ -5,6 +5,13 @@ type BoardingPass struct {
 	SeatId      int
 }
 
+func Parse(input string) *BoardingPass {
+	row := ParseRow(input[:7])
+	column := ParseColumn(input[7:])
+
+	return &BoardingPass{Row: row, Column: column, SeatId: row*8 + column}
+}
+
 func ParseRow(input string) int {
 	min := 0
 	max := 127
@@ -39,9 +46,3 @@ func ParseColumn(input string) int {
 	return max
 }
 
-func Parse(input string) *BoardingPass {
-	row := ParseRow(input[:7])
-	column := ParseColumn(input[7:])
-
-	return &BoardingPass{Row: row, Column: column, SeatId: row*8 + column}
-}
