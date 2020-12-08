@@ -1,1 +1,3 @@
-module "day-7"
+module day-7
+
+go 1.15
