@@ -72,7 +72,7 @@ var parseRuleTestCases = []struct {
 	},
 }
 
-var sumOuterBagsTestCases = []struct {
+var sumPossibleOuterBagsTestCases = []struct {
 	input    []string
 	expected int
 	success  bool
@@ -94,7 +94,7 @@ var sumOuterBagsTestCases = []struct {
 	},
 }
 
-var sumInnerBagsTestCases = []struct {
+var sumRequiredInnerBagsTestCases = []struct {
 	input    []string
 	expected int
 	success  bool

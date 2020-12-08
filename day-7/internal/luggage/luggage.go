@@ -19,7 +19,7 @@ type Rules map[string]*Rule
 
 type Set map[string]interface{}
 
-func SumPossibleOuterBags(input []string, target string) (int, error) {
+func SumOuterBags(input []string, target string) (int, error) {
 	rules, err := ParseRules(input)
 	if err != nil {
 		return 0, err
@@ -29,7 +29,7 @@ func SumPossibleOuterBags(input []string, target string) (int, error) {
 	return len(outerBags), nil
 }
 
-func SumRequiredInnerBags(input []string, target string) (int, error) {
+func SumInnerBags(input []string, target string) (int, error) {
 	rules, err := ParseRules(input)
 	if err != nil {
 		return 0, err

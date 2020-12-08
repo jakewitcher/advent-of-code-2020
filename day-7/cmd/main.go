@@ -17,7 +17,7 @@ func main() {
 }
 
 func PartOne(rules []string) {
-	count, err := luggage.SumPossibleOuterBags(rules, "shiny gold")
+	count, err := luggage.SumOuterBags(rules, "shiny gold")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -26,7 +26,7 @@ func PartOne(rules []string) {
 }
 
 func PartTwo(rules []string) {
-	count, err := luggage.SumRequiredInnerBags(rules, "shiny gold")
+	count, err := luggage.SumInnerBags(rules, "shiny gold")
 	if err != nil {
 		log.Fatal(err.Error())
 	}

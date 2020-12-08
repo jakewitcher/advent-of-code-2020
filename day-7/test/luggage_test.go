@@ -33,8 +33,8 @@ func TestParseRule(t *testing.T) {
 }
 
 func TestSumPossibleOuterBags(t *testing.T) {
-	for _, test := range sumOuterBagsTestCases {
-		actual, err := luggage.SumPossibleOuterBags(test.input, "shiny gold")
+	for _, test := range sumPossibleOuterBagsTestCases {
+		actual, err := luggage.SumOuterBags(test.input, "shiny gold")
 		if err != nil && test.success {
 			t.Fatalf("error not expected: %s", err.Error())
 		}
@@ -46,8 +46,8 @@ func TestSumPossibleOuterBags(t *testing.T) {
 }
 
 func TestSumRequiredInnerBags(t *testing.T) {
-	for _, test := range sumInnerBagsTestCases {
-		actual, err := luggage.SumRequiredInnerBags(test.input, "shiny gold")
+	for _, test := range sumRequiredInnerBagsTestCases {
+		actual, err := luggage.SumInnerBags(test.input, "shiny gold")
 		if err != nil && test.success {
 			t.Fatalf("error not expected: %s", err.Error())
 		}
