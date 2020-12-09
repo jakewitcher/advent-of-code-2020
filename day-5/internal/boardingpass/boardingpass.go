@@ -15,14 +15,14 @@ func Parse(input string) *BoardingPass {
 func ParseRow(input string) int {
 	min := 0
 	max := 127
-	rng := 128
+	width := 128
 
 	for _, r := range input {
-		rng /= 2
+		width /= 2
 		if r == 'F' {
-			max -= rng
+			max -= width
 		} else if r == 'B' {
-			min += rng
+			min += width
 		}
 	}
 
@@ -32,14 +32,14 @@ func ParseRow(input string) int {
 func ParseColumn(input string) int {
 	min := 0
 	max := 7
-	rng := 8
+	height := 8
 
 	for _, r := range input {
-		rng /= 2
+		height /= 2
 		if r == 'L' {
-			max -= rng
+			max -= height
 		} else if r == 'R' {
-			min += rng
+			min += height
 		}
 	}
 
