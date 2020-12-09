@@ -69,4 +69,3 @@ func MinMax(nums []int) (min, max int) {
 
 	return min, max
 }
-
