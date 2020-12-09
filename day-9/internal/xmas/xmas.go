@@ -8,12 +8,12 @@ import (
 func FindFirstWeakness(sequence []int, preamble int) (int, error) {
 Main:
 	for i, j := 0, preamble; j < len(sequence); i, j = i+1, j+1 {
-		rng := sequence[i:j]
+		window := sequence[i:j]
 		target := sequence[j]
 
-		for n := 0; n < len(rng)-1; n++ {
-			for m := n + 1; m < len(rng); m++ {
-				if rng[n]+rng[m] == target {
+		for n := 0; n < len(window)-1; n++ {
+			for m := n + 1; m < len(window); m++ {
+				if window[n]+window[m] == target {
 					continue Main
 				}
 			}
@@ -36,8 +36,8 @@ func FindSecondWeakness(sequence []int, preamble int) (int, error) {
 	i, j := 0, 1
 	for j <= len(sequence) {
 		if sum == n {
-			rng := sequence[i:j]
-			min, max := MinMax(rng)
+			window := sequence[i:j]
+			min, max := MinMax(window)
 			return min + max, nil
 		}
 
