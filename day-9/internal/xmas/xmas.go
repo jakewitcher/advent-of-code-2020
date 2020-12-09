@@ -1,8 +1,8 @@
 package xmas
 
 import (
-	"day-9/internal/intslice"
 	"errors"
+	"math"
 )
 
 func FindFirstWeakness(sequence []int, preamble int) (int, error) {
@@ -31,20 +31,42 @@ func FindSecondWeakness(sequence []int, preamble int) (int, error) {
 		return 0, err
 	}
 
-	for i, j := 0, 2; j < len(sequence); i, j = i+1, i+3 {
-		var sum int
-		for sum < n || j > len(sequence) {
+	sum := sequence[0]
+
+	i, j := 0, 1
+	for j <= len(sequence) {
+		if sum == n {
 			rng := sequence[i:j]
-			sum = intslice.Sum(rng)
+			min, max := MinMax(rng)
+			return min + max, nil
+		}
 
-			if sum == n {
-				min, max := intslice.Min(rng), intslice.Max(rng)
-				return max + min, nil
-			}
+		if sum > n {
+			sum -= sequence[i]
+			i++
+		}
 
+		if sum < n {
+			sum += sequence[j]
 			j++
 		}
 	}
 
 	return 0, errors.New("no value found meeting condition")
 }
+
+func MinMax(nums []int) (min, max int) {
+	min, max = math.MaxInt64, math.MinInt64
+	for _, n := range nums {
+		if n < min {
+			min = n
+		}
+
+		if n > max {
+			max = n
+		}
+	}
+
+	return min, max
+}
+
