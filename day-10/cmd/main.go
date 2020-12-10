@@ -1,27 +1,27 @@
 package main
 
 import (
-	"day-10/internal/input"
-	"day-10/internal/jolt"
+	"day-10/internal/adapters"
+	io "day-10/internal/input"
 	"log"
 )
 
 func main() {
-	adapters, err := input.Extract()
+	input, err := io.Extract()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	PartOne(adapters)
-	PartTwo(adapters)
+	PartOne(input)
+	PartTwo(input)
 }
 
-func PartOne(adapters []int) {
-	difference := jolt.CalculateDifference(adapters)
+func PartOne(input []int) {
+	difference := adapters.CalculateDifference(input)
 	log.Printf("product of adapters with difference of 1 and difference of 3: %d", difference)
 }
 
-func PartTwo(adapters []int) {
-	paths := jolt.CalculatePaths(adapters)
+func PartTwo(input []int) {
+	paths := adapters.CalculatePaths(input)
 	log.Printf("number of unique adapter paths: %d", paths)
 }

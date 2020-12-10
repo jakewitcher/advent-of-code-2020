@@ -1,4 +1,4 @@
-package jolt
+package adapters
 
 var testCases = []struct {
 	input              []int

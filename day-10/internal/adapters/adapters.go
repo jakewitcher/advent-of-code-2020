@@ -1,4 +1,4 @@
-package jolt
+package adapters
 
 import (
 	g "day-10/internal/graph"
