@@ -1,19 +1,19 @@
-package jolt
+package graph
 
 type AdjacentVertex int
 type Vertex []AdjacentVertex
 
 type Graph struct {
-	vertices []Vertex
+	Vertices []Vertex
 }
 
 func (g *Graph) AddAdjacent(v int, av AdjacentVertex) {
-	g.vertices[v] = append(g.vertices[v], av)
+	g.Vertices[v] = append(g.Vertices[v], av)
 }
 
 func (g *Graph) GetPaths() int {
 	seen := &SeenPaths{vertices: make(map[AdjacentVertex]int)}
-	return g.getPaths(g.vertices[0], seen)
+	return g.getPaths(g.Vertices[0], seen)
 }
 
 func (g *Graph) getPaths(vertex Vertex, seen *SeenPaths) int {
@@ -28,7 +28,7 @@ func (g *Graph) getPaths(vertex Vertex, seen *SeenPaths) int {
 			continue
 		}
 
-		adjPaths := g.getPaths(g.vertices[adj], seen)
+		adjPaths := g.getPaths(g.Vertices[adj], seen)
 		seen.Add(adj, adjPaths)
 
 		vertexPaths += adjPaths

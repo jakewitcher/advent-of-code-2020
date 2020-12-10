@@ -1,6 +1,7 @@
 package jolt
 
 import (
+	g "day-10/internal/graph"
 	"sort"
 )
 
@@ -19,11 +20,11 @@ func CalculateDifference(adapters []int) int {
 func CalculatePaths(adapters []int) int {
 	adapters = initializeAdapters(adapters)
 
-	graph := Graph{vertices: make([]Vertex, len(adapters))}
+	graph := g.Graph{Vertices: make([]g.Vertex, len(adapters))}
 
 	for i, j := 0, 1; j < len(adapters); i, j = i+1, i+2 {
 		for j < len(adapters) && adapters[j]-adapters[i] <= 3 {
-			graph.AddAdjacent(i, AdjacentVertex(j))
+			graph.AddAdjacent(i, g.AdjacentVertex(j))
 			j++
 		}
 	}
