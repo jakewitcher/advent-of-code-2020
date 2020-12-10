@@ -1,18 +1,18 @@
 package jolt
 
-type Edge int
-type Vertex []Edge
+type AdjacentVertex int
+type Vertex []AdjacentVertex
 
 type Graph struct {
 	vertices []Vertex
 }
 
-func (g *Graph) AddEdge(v int, e Edge) {
-	g.vertices[v] = append(g.vertices[v], e)
+func (g *Graph) AddAdjacent(v int, av AdjacentVertex) {
+	g.vertices[v] = append(g.vertices[v], av)
 }
 
 func (g *Graph) GetPaths() int {
-	seen := &SeenPaths{edges: make(map[Edge]int)}
+	seen := &SeenPaths{vertices: make(map[AdjacentVertex]int)}
 	return g.getPaths(g.vertices[0], seen)
 }
 
@@ -22,30 +22,30 @@ func (g *Graph) getPaths(vertex Vertex, seen *SeenPaths) int {
 	}
 
 	var vertexPaths int
-	for _, edge := range vertex {
-		if count, ok := seen.HasKey(edge); ok {
+	for _, adj := range vertex {
+		if count, ok := seen.HasKey(adj); ok {
 			vertexPaths += count
 			continue
 		}
 
-		edgePaths := g.getPaths(g.vertices[edge], seen)
-		seen.Add(edge, edgePaths)
+		adjPaths := g.getPaths(g.vertices[adj], seen)
+		seen.Add(adj, adjPaths)
 
-		vertexPaths += edgePaths
+		vertexPaths += adjPaths
 	}
 
 	return vertexPaths
 }
 
 type SeenPaths struct {
-	edges map[Edge]int
+	vertices map[AdjacentVertex]int
 }
 
-func (s *SeenPaths) Add(edge Edge, paths int) {
-	s.edges[edge] = paths
+func (s *SeenPaths) Add(av AdjacentVertex, paths int) {
+	s.vertices[av] = paths
 }
 
-func (s *SeenPaths) HasKey(edge Edge) (int, bool) {
-	count, ok := s.edges[edge]
+func (s *SeenPaths) HasKey(av AdjacentVertex) (int, bool) {
+	count, ok := s.vertices[av]
 	return count, ok
 }

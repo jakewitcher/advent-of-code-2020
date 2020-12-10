@@ -23,7 +23,7 @@ func CalculatePaths(adapters []int) int {
 
 	for i, j := 0, 1; j < len(adapters); i, j = i+1, i+2 {
 		for j < len(adapters) && adapters[j]-adapters[i] <= 3 {
-			graph.AddEdge(i, Edge(j))
+			graph.AddAdjacent(i, AdjacentVertex(j))
 			j++
 		}
 	}
