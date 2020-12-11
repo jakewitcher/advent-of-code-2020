@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-func Extract() ([][]string, error) {
-	file, err := ioutil.ReadFile("internal/input/input.txt")
+func Extract(path string) ([][]string, error) {
+	file, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Println("failed to read file")
 		return nil, err

@@ -1,6 +1,9 @@
 package validate
 
-import "testing"
+import (
+	"day-2/internal/input"
+	"testing"
+)
 import "day-2/internal/validate"
 
 func TestParsePolicyMinMax(t *testing.T) {
@@ -71,5 +74,29 @@ func TestIdentifyValidPasswordsTobogganCorpPolicy(t *testing.T) {
 		if actual != test.expected {
 			t.Errorf("expected %d, actual %d", test.expected, actual)
 		}
+	}
+}
+
+func BenchmarkIdentifyValidPasswordsSledRentalPolicy(b *testing.B) {
+	n, err := input.Extract("../internal/input/input.txt")
+	if err != nil {
+		b.Fatalf("failed reading input from file, %s", err.Error())
+	}
+
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_, _ = validate.IdentifyValidPasswords(n, validate.ApplySledRentalPolicy)
+	}
+}
+
+func BenchmarkIdentifyValidPasswordsTobogganCorpPolicy(b *testing.B) {
+	n, err := input.Extract("../internal/input/input.txt")
+	if err != nil {
+		b.Fatalf("failed reading input from file, %s", err.Error())
+	}
+
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_, _ = validate.IdentifyValidPasswords(n, validate.ApplyTobogganCorpPolicy)
 	}
 }

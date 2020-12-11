@@ -2,26 +2,26 @@ package main
 
 import (
 	"day-10/internal/adapters"
-	io "day-10/internal/input"
+	"day-10/internal/input"
 	"log"
 )
 
 func main() {
-	input, err := io.Extract("internal/input/input.txt")
+	joltAdapters, err := input.Extract("internal/input/input.txt")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	PartOne(input)
-	PartTwo(input)
+	PartOne(joltAdapters)
+	PartTwo(joltAdapters)
 }
 
-func PartOne(input []int) {
-	difference := adapters.CalculateDifference(input)
+func PartOne(joltAdapters []int) {
+	difference := adapters.CalculateDifference(joltAdapters)
 	log.Printf("product of adapters with difference of 1 and difference of 3: %d", difference)
 }
 
-func PartTwo(input []int) {
-	paths := adapters.CalculatePaths(input)
+func PartTwo(joltAdapters []int) {
+	paths := adapters.CalculatePaths(joltAdapters)
 	log.Printf("number of unique adapter paths: %d", paths)
 }

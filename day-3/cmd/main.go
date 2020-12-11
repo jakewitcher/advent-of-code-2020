@@ -7,23 +7,23 @@ import (
 )
 
 func main() {
-	matrix, err := input.Extract()
+	input, err := input.Extract("internal/input/input.txt")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	PartOne(matrix)
-	PartTwo(matrix)
+	PartOne(input)
+	PartTwo(input)
 }
 
-func PartOne(matrix [][]rune) {
+func PartOne(input [][]rune) {
 	slope := toboggan.Slope{Right: 3, Down: 1}
-	trees := toboggan.EvaluateSleddingPath(matrix, slope)
+	trees := toboggan.EvaluateSleddingPath(input, slope)
 
 	log.Printf("trees along slope %v: %d", slope, trees)
 }
 
-func PartTwo(matrix [][]rune) {
+func PartTwo(input [][]rune) {
 	slopes := []toboggan.Slope{
 		{Right: 1, Down: 1},
 		{Right: 3, Down: 1},
@@ -34,7 +34,7 @@ func PartTwo(matrix [][]rune) {
 
 	product := 1
 	for _, slope := range slopes {
-		trees := toboggan.EvaluateSleddingPath(matrix, slope)
+		trees := toboggan.EvaluateSleddingPath(input, slope)
 		product *= trees
 	}
 

@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	boardingPasses, err := input.Extract()
+	boardingPasses, err := input.Extract("internal/input/input.txt")
 	if err != nil {
 		log.Fatal(err.Error())
 	}

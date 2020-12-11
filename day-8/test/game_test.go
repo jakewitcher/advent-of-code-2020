@@ -2,6 +2,7 @@ package game
 
 import (
 	"day-8/internal/game"
+	"day-8/internal/input"
 	"testing"
 )
 
@@ -41,5 +42,29 @@ func TestFindFinalAccumulatorOfFixedProgram(t *testing.T) {
 		if err == nil && actual != test.expected {
 			t.Fatalf("expected %v, actual %v", test.expected, actual)
 		}
+	}
+}
+
+func BenchmarkFindFinalAccumulatorBeforeLoop(b *testing.B) {
+	n, err := input.Extract("../internal/input/input.txt")
+	if err != nil {
+		b.Fatalf("failed reading input from file, %s", err.Error())
+	}
+
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_, _ = game.FindFinalAccumulatorBeforeLoop(n)
+	}
+}
+
+func BenchmarkFindFinalAccumulatorOfFixedProgram(b *testing.B) {
+	n, err := input.Extract("../internal/input/input.txt")
+	if err != nil {
+		b.Fatalf("failed reading input from file, %s", err.Error())
+	}
+
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_, _  = game.FindFinalAccumulatorOfFixedProgram(n)
 	}
 }

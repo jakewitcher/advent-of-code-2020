@@ -2,6 +2,7 @@ package form
 
 import (
 	"day-6/internal/form"
+	"day-6/internal/input"
 	"testing"
 )
 
@@ -18,5 +19,31 @@ func TestEvaluateConsensusYesResponsesByGroup(t *testing.T) {
 		if consensus := form.EvaluateConsensusYesResponsesByGroup(test.input); consensus != test.consensus {
 			t.Fatalf("consensus %d, consensus %d", test.consensus, consensus)
 		}
+	}
+}
+
+func BenchmarkEvaluateTotalYesResponsesByGroup(b *testing.B) {
+	n, err := input.Extract("../internal/input/input.txt")
+	if err != nil {
+		b.Fatalf("failed reading input from file, %s", err.Error())
+	}
+
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		group := i % (len(n) - 1)
+		_ = form.EvaluateTotalYesResponsesByGroup(n[group])
+	}
+}
+
+func BenchmarkEvaluateConsensusYesResponsesByGroup(b *testing.B) {
+	n, err := input.Extract("../internal/input/input.txt")
+	if err != nil {
+		b.Fatalf("failed reading input from file, %s", err.Error())
+	}
+
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		group := i % (len(n) - 1)
+		_ = form.EvaluateConsensusYesResponsesByGroup(n[group])
 	}
 }

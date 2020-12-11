@@ -1,6 +1,7 @@
 package luggage
 
 import (
+	"day-7/internal/input"
 	"day-7/internal/luggage"
 	"testing"
 )
@@ -32,7 +33,7 @@ func TestParseRule(t *testing.T) {
 	}
 }
 
-func TestSumPossibleOuterBags(t *testing.T) {
+func TestSumOuterBags(t *testing.T) {
 	for _, test := range sumOuterBagsTestCases {
 		actual, err := luggage.SumOuterBags(test.input, "shiny gold")
 		if err != nil && test.success {
@@ -45,7 +46,7 @@ func TestSumPossibleOuterBags(t *testing.T) {
 	}
 }
 
-func TestSumRequiredInnerBags(t *testing.T) {
+func TestSumInnerBags(t *testing.T) {
 	for _, test := range sumInnerBagsTestCases {
 		actual, err := luggage.SumInnerBags(test.input, "shiny gold")
 		if err != nil && test.success {
@@ -55,5 +56,29 @@ func TestSumRequiredInnerBags(t *testing.T) {
 		if err == nil && actual != test.expected {
 			t.Fatalf("expected %d, actual %d", test.expected, actual)
 		}
+	}
+}
+
+func BenchmarkSumOuterBags(b *testing.B) {
+	n, err := input.Extract("../internal/input/input.txt")
+	if err != nil {
+		b.Fatalf("failed reading input from file, %s", err.Error())
+	}
+
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_, _ = luggage.SumOuterBags(n, "shiny gold")
+	}
+}
+
+func BenchmarkSumInnerBags(b *testing.B) {
+	n, err := input.Extract("../internal/input/input.txt")
+	if err != nil {
+		b.Fatalf("failed reading input from file, %s", err.Error())
+	}
+
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_, _ = luggage.SumInnerBags(n, "shiny gold")
 	}
 }

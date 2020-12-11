@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	rules, err := input.Extract()
+	rules, err := input.Extract("internal/input/input.txt")
 	if err != nil {
 		log.Fatal(err.Error())
 	}

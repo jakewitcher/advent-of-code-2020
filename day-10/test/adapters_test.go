@@ -22,12 +22,25 @@ func TestCalculatePaths(t *testing.T) {
 	}
 }
 
+func BenchmarkCalculateDifference(b *testing.B) {
+	n, err := input.Extract("../internal/input/input.txt")
+	if err != nil {
+		b.Fatalf("failed reading input from file, %s", err.Error())
+	}
+
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_ = adapters.CalculateDifference(n)
+	}
+}
+
 func BenchmarkCalculatePaths(b *testing.B) {
 	n, err := input.Extract("../internal/input/input.txt")
 	if err != nil {
 		b.Fatalf("failed reading input from file, %s", err.Error())
 	}
 
+	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
 		_ = adapters.CalculatePaths(n)
 	}

@@ -7,16 +7,22 @@ import (
 	"strings"
 )
 
+const (
+	JMP = "jmp"
+	NOP = "nop"
+	ACC = "acc"
+)
+
 type Instruction struct {
 	Operation string
 	Argument  int
 }
 
 func (i *Instruction) Flip() {
-	if i.Operation == "jmp" {
-		i.Operation = "nop"
-	} else if i.Operation == "nop" {
-		i.Operation = "jmp"
+	if i.Operation == JMP {
+		i.Operation = NOP
+	} else if i.Operation == NOP {
+		i.Operation = JMP
 	}
 }
 
@@ -28,7 +34,7 @@ func FindFinalAccumulatorOfFixedProgram(input []string) (int, error) {
 
 	operations := make(map[int]interface{})
 	for i, instruction := range instructions {
-		if instruction.Operation == "jmp" || instruction.Operation == "nop" {
+		if instruction.Operation == JMP || instruction.Operation == NOP {
 			operations[i] = struct{}{}
 		}
 	}
@@ -93,11 +99,11 @@ func RunBootCode(instructions []Instruction) (int, int, error) {
 
 func RunInstruction(instruction Instruction, accumulator, i int) (int, int, error) {
 	switch instruction.Operation {
-	case "acc":
+	case ACC:
 		return accumulator + instruction.Argument, i + 1, nil
-	case "jmp":
+	case JMP:
 		return accumulator, i + instruction.Argument, nil
-	case "nop":
+	case NOP:
 		return accumulator, i + 1, nil
 	default:
 		return accumulator, i, fmt.Errorf("not a valid operation: %s", instruction.Operation)
