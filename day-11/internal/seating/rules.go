@@ -51,17 +51,16 @@ func countVisibleOccupied(seating Seating, point Point) int {
 }
 
 func isOccupiedVisible(seating Seating, point Point, direction Direction) bool {
-	p := point.Move(direction)
-
-	for {
-		if seating.isOccupied(p) {
+	for seating.isWithinRange(point) {
+		point = point.Move(direction)
+		if seating.isOccupied(point) {
 			return true
 		}
 
-		if !seating.isWithinRange(p) || seating.isEmpty(p) {
+		if seating.isEmpty(point) {
 			return false
 		}
-
-		p = p.Move(direction)
 	}
+
+	return false
 }
