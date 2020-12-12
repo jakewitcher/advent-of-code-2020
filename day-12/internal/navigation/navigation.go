@@ -15,15 +15,15 @@ type Point struct {
 }
 
 type Ship struct {
-	Point
-	Waypoint *Point
 	Facing   rune
+	Waypoint *Point
+	Point
 	Interpreter
 }
 
 func (s *Ship) RunInstructions(instructions []*Instruction) {
 	for _, instruction := range instructions {
-		s.Interpreter.RunInstruction(s, instruction)
+		s.RunInstruction(s, instruction)
 	}
 }
 
