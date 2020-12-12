@@ -65,7 +65,6 @@ func BenchmarkApplyAdjacentRules(b *testing.B) {
 	s := setupSeating(n, seating.AdjacentRules{})
 
 	b.ReportAllocs()
-	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_, _, _ = s.ApplyRules()
 	}
@@ -80,7 +79,6 @@ func BenchmarkApplyVisibleRules(b *testing.B) {
 	s := setupSeating(n, seating.VisibleRules{})
 
 	b.ReportAllocs()
-	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_, _, _ = s.ApplyRules()
 	}
