@@ -28,7 +28,7 @@ func FindEarliestTimestamp(input []string) (int, error) {
 			continue
 		}
 
-		nextTimeStamp := FindMultipleOfXGreaterThanZWhereXPlusDiffEqualsMultipleOfY(
+		nextTimeStamp := FindMultipleOfXGreaterThanZWhereXPlusOffsetEqualsMultipleOfY(
 			origin,
 			buses[i].Id,
 			currentTimeStamp,
@@ -56,10 +56,10 @@ func sortBusesDescending(buses []Bus) []Bus {
 	return buses
 }
 
-func FindMultipleOfXGreaterThanZWhereXPlusDiffEqualsMultipleOfY(x, y, z, diff int) int {
-	multipleX, multipleY := z, z/y * y
+func FindMultipleOfXGreaterThanZWhereXPlusOffsetEqualsMultipleOfY(x, y, z, offset int) int {
+	multipleX, multipleY := z, z/y*y
 
-	for multipleX+diff != multipleY {
+	for multipleX+offset != multipleY {
 		if multipleY <= multipleX {
 			multipleY += y
 		} else {
