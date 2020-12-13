@@ -3,7 +3,6 @@ package shuttle
 import (
 	"fmt"
 	"math"
-	"sort"
 	"strconv"
 )
 
@@ -17,57 +16,36 @@ func FindEarliestTimestamp(input []string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	origin := buses[0].Id
-	seen := make(map[int]int)
 
-	buses = sortBusesDescending(buses[1:])
-	currentTimeStamp := buses[0].Id / origin * origin
+	product := 1
 
-	for i := 0; i < len(buses); {
-		if prevTimeStamp, ok := seen[buses[i].Id]; ok && prevTimeStamp == currentTimeStamp {
-			i++
-			continue
+	for _, bus := range buses {
+		product *= bus.Id
+	}
+
+	findInv := func(num, pp int) (int, error) {
+		for n := 1; true; n++ {
+			if (pp*n)%num == 1 {
+				return n, nil
+			}
 		}
-		fmt.Printf("timestamp: %20d, bus id: %3d\n", currentTimeStamp, buses[i].Id)
-		nextTimeStamp := FindMultipleOfXGreaterThanZWhereXPlusOffsetEqualsMultipleOfY(
-			origin,
-			buses[i].Id,
-			currentTimeStamp,
-			buses[i].Offset,
-		)
 
-		seen[buses[i].Id] = nextTimeStamp
+		return 0, fmt.Errorf("no inv found for num %d, pp %d", num, pp)
+	}
 
-		if nextTimeStamp != currentTimeStamp {
-			currentTimeStamp = nextTimeStamp
-			i = 0
-		} else {
-			i++
+	var sum int
+	for _, bus := range buses {
+		rem := bus.Id - (bus.Offset % bus.Id)
+		pp := product / bus.Id
+		inv, err := findInv(bus.Id, pp)
+		if err != nil {
+			return sum, err
 		}
+
+		sum += rem * pp * inv
 	}
 
-	return currentTimeStamp, nil
-}
-
-func sortBusesDescending(buses []Bus) []Bus {
-	sort.Slice(buses, func(i, j int) bool {
-		return buses[i].Id > buses[j].Id
-	})
-
-	return buses
-}
-
-func FindMultipleOfXGreaterThanZWhereXPlusOffsetEqualsMultipleOfY(x, y, z, offset int) int {
-	xMult := z / x
-	getYMult := func(xMultiplier int) float64 {
-		return float64(x*xMultiplier+offset) / float64(y)
-	}
-
-	for yMult := getYMult(xMult); yMult != math.Floor(yMult); yMult = getYMult(xMult) {
-		xMult++
-	}
-
-	return x * xMult
+	return sum % product, nil
 }
 
 func FindNextAvailableBus(timestamp int, input []string) (int, error) {

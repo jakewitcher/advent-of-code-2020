@@ -1,6 +1,7 @@
 package shuttle
 
 import (
+	"day-13/internal/input"
 	"day-13/internal/shuttle"
 	"testing"
 )
@@ -31,20 +32,26 @@ func TestFindEarliestTimestamp(t *testing.T) {
 	}
 }
 
-func TestFindMultipleOfXGreaterThanZWhereXPlusDiffEqualsMultipleOfY(t *testing.T) {
-	for _, test := range findMultipleOfXTestCases {
-		actual := shuttle.FindMultipleOfXGreaterThanZWhereXPlusOffsetEqualsMultipleOfY(test.x, test.y, test.z, test.offset)
-		if actual != test.expected {
-			t.Fatalf("expected %d, actual %d", test.expected, actual)
-		}
+func BenchmarkFindNextAvailableBus(b *testing.B) {
+	ts, n, err := input.Extract("../internal/input/input.txt")
+	if err != nil {
+		b.Fatalf("failed reading input from file, %s", err.Error())
+	}
+
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_, _ = shuttle.FindNextAvailableBus(ts, n)
 	}
 }
 
 func BenchmarkFindEarliestTimestamp(b *testing.B) {
+	_, n, err := input.Extract("../internal/input/input.txt")
+	if err != nil {
+		b.Fatalf("failed reading input from file, %s", err.Error())
+	}
+
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		for _, test := range earliestTimestampTestCases {
-			_, _ = shuttle.FindEarliestTimestamp(test.input)
-		}
+		_, _ = shuttle.FindEarliestTimestamp(n)
 	}
 }
