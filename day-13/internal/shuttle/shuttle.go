@@ -17,10 +17,10 @@ func FindEarliestTimestamp(input []string) (int, error) {
 		return 0, err
 	}
 	origin := buses[0].Id
-	currentTimeStamp := origin
 	seen := make(map[int]int)
 
 	buses = sortBusesDescending(buses)
+	currentTimeStamp := buses[0].Id / origin * origin
 
 	for i := 1; i < len(buses); {
 		if prevTimeStamp, ok := seen[buses[i].Id]; ok && prevTimeStamp == currentTimeStamp {
