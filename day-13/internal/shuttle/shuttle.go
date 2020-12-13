@@ -2,6 +2,7 @@ package shuttle
 
 import (
 	"math"
+	"sort"
 	"strconv"
 )
 
@@ -18,6 +19,8 @@ func FindEarliestTimestamp(input []string) (int, error) {
 	origin := buses[0].Id
 	currentTimeStamp := origin
 	seen := make(map[int]int)
+
+	buses = sortBusesDescending(buses)
 
 	for i := 1; i < len(buses); {
 		if prevTimeStamp, ok := seen[buses[i].Id]; ok && prevTimeStamp == currentTimeStamp {
@@ -43,6 +46,14 @@ func FindEarliestTimestamp(input []string) (int, error) {
 	}
 
 	return currentTimeStamp, nil
+}
+
+func sortBusesDescending(buses []Bus) []Bus {
+	sort.Slice(buses, func(i, j int) bool {
+		return buses[i].Id > buses[j].Id
+	})
+
+	return buses
 }
 
 func FindMultipleOfXGreaterThanZWhereXPlusDiffEqualsMultipleOfY(x, y, z, diff int) int {
