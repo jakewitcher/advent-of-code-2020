@@ -7,8 +7,8 @@ import (
 )
 
 type Bus struct {
-	Id       int
-	Position int
+	Id     int
+	Offset int
 }
 
 func FindEarliestTimestamp(input []string) (int, error) {
@@ -19,10 +19,10 @@ func FindEarliestTimestamp(input []string) (int, error) {
 	origin := buses[0].Id
 	seen := make(map[int]int)
 
-	buses = sortBusesDescending(buses)
+	buses = sortBusesDescending(buses[1:])
 	currentTimeStamp := buses[0].Id / origin * origin
 
-	for i := 1; i < len(buses); {
+	for i := 0; i < len(buses); {
 		if prevTimeStamp, ok := seen[buses[i].Id]; ok && prevTimeStamp == currentTimeStamp {
 			i++
 			continue
@@ -32,7 +32,7 @@ func FindEarliestTimestamp(input []string) (int, error) {
 			origin,
 			buses[i].Id,
 			currentTimeStamp,
-			buses[i].Position,
+			buses[i].Offset,
 		)
 
 		seen[buses[i].Id] = nextTimeStamp
@@ -100,7 +100,7 @@ func extractBuses(busIds []string) ([]Bus, error) {
 			return nil, err
 		}
 
-		buses = append(buses, Bus{Id: busId, Position: i})
+		buses = append(buses, Bus{Id: busId, Offset: i})
 	}
 	return buses, nil
 }
