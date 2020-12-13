@@ -1,6 +1,7 @@
 package shuttle
 
 import (
+	"fmt"
 	"math"
 	"sort"
 	"strconv"
@@ -27,7 +28,7 @@ func FindEarliestTimestamp(input []string) (int, error) {
 			i++
 			continue
 		}
-
+		fmt.Printf("timestamp: %20d, bus id: %3d\n", currentTimeStamp, buses[i].Id)
 		nextTimeStamp := FindMultipleOfXGreaterThanZWhereXPlusOffsetEqualsMultipleOfY(
 			origin,
 			buses[i].Id,
@@ -57,17 +58,16 @@ func sortBusesDescending(buses []Bus) []Bus {
 }
 
 func FindMultipleOfXGreaterThanZWhereXPlusOffsetEqualsMultipleOfY(x, y, z, offset int) int {
-	multipleX, multipleY := z, z/y*y
-
-	for multipleX+offset != multipleY {
-		if multipleY <= multipleX {
-			multipleY += y
-		} else {
-			multipleX += x
-		}
+	xMult := z / x
+	getYMult := func(xMultiplier int) float64 {
+		return float64(x*xMultiplier+offset) / float64(y)
 	}
 
-	return multipleX
+	for yMult := getYMult(xMult); yMult != math.Floor(yMult); yMult = getYMult(xMult) {
+		xMult++
+	}
+
+	return x * xMult
 }
 
 func FindNextAvailableBus(timestamp int, input []string) (int, error) {
