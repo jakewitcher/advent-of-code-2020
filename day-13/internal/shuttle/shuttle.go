@@ -16,39 +16,39 @@ func FindEarliestTimestamp(input []string) (int, error) {
 		return 0, err
 	}
 	origin := buses[0].Id
-	timestamp := origin
-	var found bool
+	currentTimeStamp := origin
+	seen := make(map[int]int)
 
-	for !found {
-		for i, bus := range buses {
-			if bus.Position == 0 {
-				continue
-			}
+	for i := 1; i < len(buses); {
+		if prevTimeStamp, ok := seen[buses[i].Id]; ok && prevTimeStamp == currentTimeStamp {
+			i++
+			continue
+		}
 
-			currentBusIdTimestamp := (timestamp/bus.Id + 1) * bus.Id
-			if currentBusIdTimestamp == timestamp+bus.Position {
-				if i+1 == len(buses) {
-					found = true
-				}
-				continue
-			}
+		nextTimeStamp := FindMultipleOfXGreaterThanZWhereXPlusDiffEqualsMultipleOfY(
+			origin,
+			buses[i].Id,
+			currentTimeStamp,
+			buses[i].Position,
+		)
 
-			timestamp += origin
-			break
+		seen[buses[i].Id] = nextTimeStamp
+
+		if nextTimeStamp != currentTimeStamp {
+			currentTimeStamp = nextTimeStamp
+			i = 0
+		} else {
+			i++
 		}
 	}
 
-	return timestamp, nil
+	return currentTimeStamp, nil
 }
 
 func FindMultipleOfXGreaterThanZWhereXPlusDiffEqualsMultipleOfY(x, y, z, diff int) int {
-	multipleX, multipleY := x, y
+	multipleX, multipleY := z, z/y * y
 
-	for multipleX < z {
-		multipleX += x
-	}
-
-	for multipleX + diff != multipleY {
+	for multipleX+diff != multipleY {
 		if multipleY <= multipleX {
 			multipleY += y
 		} else {
